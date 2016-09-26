@@ -1,0 +1,74 @@
+<html>
+<header>
+  <title>codelab-js-arrays todolist </title>
+</header>
+<boby>
+  <input id="new-todo-input" type="text">
+  <ul id="todo-list"></ul>
+
+<button id="clearall-todo">Clear All</button> <button id="random-todo">Can't decide</button></br></br>
+Number of items in To Do list:<div id="todoListcount"></div>
+<script>
+var todos = []
+
+var newTodoInput = document.getElementById('new-todo-input')
+var todoList = document.getElementById('todo-list')
+var clearalllist = document.getElementById('clearall-todo')
+var randomtodo = document.getElementById('random-todo')
+var todoListcount = todos.length
+
+document.getElementById("todoListcount").innerHTML = todoListcount
+
+todoList.onclick = function(event) {
+  var clickedElement = event.target
+  if (clickedElement.className === 'remove-todo') {
+    todos.splice(clickedElement.dataset.index, 1)
+    todoListcount = todos.length
+    document.getElementById("todoListcount").innerHTML = todoListcount
+    renderTodos()
+  }
+
+}
+
+clearalllist.onclick = function(event) {
+  var clickedElement = event.target
+    todos.length = 0
+    renderTodos()
+
+}
+
+randomtodo.onclick = function(event) {
+  var clickedElement = event.target
+    todoListcount = todos.length
+    var x = Math.floor((Math.random() * todoListcount))
+    alert(todos[x])
+    renderTodos()
+
+}
+
+
+
+function renderTodos() {
+  todoList.innerHTML = todos.map(function(todo, index) {
+    return '<li>' +
+      todo +
+      ' <button class="remove-todo" data-index="' + index + '">X</button>' +
+    '</li>'
+  }).join('')
+}
+
+newTodoInput.onkeypress = function() {
+  if (event.which === 13) {
+    todos.push(this.value)
+    this.value = ''
+    todoListcount = todos.length
+    document.getElementById("todoListcount").innerHTML = todoListcount
+    renderTodos()
+    }
+  }
+
+</script>
+
+</body>
+
+</html>
